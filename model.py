@@ -1,6 +1,10 @@
 # Importing the Libraries
 
 import tensorflow as tf
+import numpy as np
+from keras.preprocessing import image
+from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow import keras
 from keras.preprocessing.image import ImageDataGenerator
 
@@ -14,7 +18,7 @@ train_datagen = ImageDataGenerator(
         zoom_range=0.2,
         horizontal_flip=True)
 training_set = train_datagen.flow_from_directory(
-        'D:\Projects\Python\Image-Classification-Cat-and-Dog\Static\training',
+        'D:/Projects/Python/Image-Classification-Cat-and-Dog/Static/training',
         target_size=(64, 64),
         batch_size=32,
         class_mode='binary')
@@ -23,7 +27,7 @@ training_set = train_datagen.flow_from_directory(
 
 test_datagen = ImageDataGenerator(rescale=1./255)
 test_set = test_datagen.flow_from_directory(
-        'D:\Projects\Python\Image-Classification-Cat-and-Dog\Static\test',
+        'D:/Projects/Python/Image-Classification-Cat-and-Dog/Static/test',
         target_size=(64, 64),
         batch_size=32,
         class_mode='binary')
@@ -71,9 +75,8 @@ cnn.fit(x = training_set, validation_data = test_set, epochs = 25)
 # PART - 4
 # Making the Prediction
 
-import numpy as np
-from keras.preprocessing import image
-test_image = image.load_img('D:/Its me/Deep Learning Udemy Course/Section 40 - Convolutional Neural Networks (CNN)/dataset/single_prediction/cat_or_dog_1.jpg', target_size =(64, 64))
+
+test_image = image.load_img('D:/Projects/Python/Image-Classification-Cat-and-Dog/dataset/CatorDog.jpg', target_size =(64, 64))
 test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis=0)
 result = cnn.predict(test_image/255.0)
